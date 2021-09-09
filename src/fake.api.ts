@@ -1,6 +1,6 @@
 import { Product } from "./Products/products.slice";
 
-const validateProduct = (product: Product) => new Promise((resolve, reject) => setTimeout(() => {
+const validateProduct = (product: Product): Promise<Product> => new Promise((resolve, reject) => setTimeout(() => {
     if (product.title.length === 0 ){
         reject('No Title')
     }
