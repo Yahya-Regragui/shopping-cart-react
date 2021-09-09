@@ -1,9 +1,12 @@
-import { useState } from "react"
-import { Product } from "./products.slice"
+import React, { useState } from "react"
+import { useAppDispatch } from "../store.hooks"
+import { addProduct, Product } from "./products.slice"
 
 const ProductForm: React.FC = () => {
 
-    const [{ title, id, price }, setProduct] = useState<Product>({
+    const dispatch = useAppDispatch()
+
+    const [product, setProduct] = useState<Product>({
         id: "",
         title: "",
         price: 0
@@ -15,14 +18,22 @@ const ProductForm: React.FC = () => {
         return newValue;
     })
 
+    const handleSubmit = (e: React.FormEvent) => {
+
+        e.preventDefault()
+        dispatch(addProduct(product))
+    }
+
+    const { title, price, id } = product
+
     return (
         <>
             <h2>Add Game To The Store</h2>
-            <form action="">
+            <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="Game Title" name="title" value={title} onChange={handleChange} />
                 <input type="number" placeholder="Price" name="price" value={price} onChange={handleChange} />
                 <input type="text" placeholder="id" name="id" value={id} onChange={handleChange} />
-                <button>Add Game</button>
+                <button type='submit' >Add Game</button>
             </form>
         </>
     )

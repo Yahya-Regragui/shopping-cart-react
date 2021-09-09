@@ -7,6 +7,8 @@ export interface Product {
     id: string;
 }
 
+
+
 const initialState: Product[] = [
     { title: "Escape From Tarkov", price: 60, id: "eft" },
     { title: "Hunt: Showdown", price: 70, id: "hunt" },
@@ -18,12 +20,19 @@ const productsSlice = createSlice({
     initialState,
     reducers: {
         addProduct: (state, action: PayloadAction<Product>) => {
-            return [action.payload, ...state]
+            // return [action.payload, ...state]
+            state.push(action.payload)
+        },
+        removeProduct: (state, action: PayloadAction<string>) => {
+            // return [action.payload, ...state]
+            return state.filter(product => product.id !== action.payload)
         }
     }
 })
 
-export const {addProduct} = productsSlice.actions;
+
+
+export const {addProduct, removeProduct} = productsSlice.actions;
 
 export const getProductsSelector = (state: RootState) => state.products;
 
